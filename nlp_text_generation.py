@@ -21,7 +21,7 @@ from transformers import pipeline, set_seed
 random_seed = 42
 max_length = 30
 num_return_sequences = 5
-initial_sentence = "Hello, I'm a language model,"
+initial_sentence = "Hello, I'm a Pierre and,"
 
 # Create generator that uses GPT-2
 generator = pipeline('text-generation', model='gpt2')
