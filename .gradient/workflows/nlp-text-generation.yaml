@@ -32,7 +32,7 @@ jobs:
 
   generateText:
     resources:
-      instance-type: C5
+      instance-type: Free-RTX4000
     needs:
       - cloneRepo
     inputs:
