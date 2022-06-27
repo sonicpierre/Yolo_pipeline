@@ -29,6 +29,27 @@ jobs:
     with:
       url: context.event.github.url
       ref: context.event.github.ref
+  
+  sayHello:
+      resources:
+      instance-type: C4
+    needs:
+      - cloneRepo
+    inputs:
+      repo: cloneRepo.outputs.repo
+    outputs:
+      generatedText:
+        type: dataset
+        with:
+          ref: demo-dataset
+    uses: script@v1
+    with:
+      script: |-
+        cp -R /inputs/repo /nlp
+        cd /nlp
+        python3 hello.py
+
+      image: paperspace/transformers-gpu:0.4.0
 
   generateText:
     resources:
