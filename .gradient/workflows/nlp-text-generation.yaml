@@ -31,7 +31,7 @@ jobs:
       ref: context.event.github.ref
   
   sayHello:
-      resources:
+    resources:
       instance-type: C4
     needs:
       - cloneRepo
