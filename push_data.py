@@ -6,7 +6,6 @@ import json
 datasets_client = DatasetsClient(API_KEY)
 datasetVersions_client = DatasetVersionsClient(API_KEY)
 
-
 def create_file_insert(to_insert:tuple, name="data_secret.json"):
 
     if name not in os.listdir():
