@@ -1,61 +1,38 @@
-'on':
+on:
   github:
     branches:
       only: main
+
 jobs:
+
+  cloneRepo:
+    resources:
+      instance-type: C4
+    outputs:
+      repo:
+        type: volume
+    uses: git-checkout@v1
+    with:
+      url: context.event.github.url
+      ref: context.event.github.ref
+  
   sayHello:
+    resources:
+      instance-type: C4
+    needs:
+      - cloneRepo
+    inputs:
+      repo: cloneRepo.outputs.repo
+    outputs:
+      generatedText:
+        type: dataset
+        with:
+          ref: demo-dataset
     uses: script@v1
     with:
-      image: paperspace/transformers-gpu:0.4.0
       script: |-
         cp -R /inputs/repo /nlp
         cd /nlp
         python3 hello.py
-    needs:
-      - cloneRepo
-    inputs:
-      repo: cloneRepo.outputs.repo
-    outputs:
-      generatedText:
-        type: dataset
-        with:
-          ref: demo-dataset
-    resources:
-      instance-type: C4
-  cloneRepo:
-    uses: git-checkout@v1
-    with:
-      ref: context.event.github.ref
-      url: context.event.github.url
-    outputs:
-      repo:
-        type: volume
-    resources:
-      instance-type: C4
-  generateText:
-    uses: script@v1
-    with:
+
       image: paperspace/transformers-gpu:0.4.0
-      script: |-
-        cp -R /inputs/repo /nlp
-        cd /nlp
-        pip3 install -U transformers
-        python3 nlp_text_generation.py
-        mv output.txt /outputs/generatedText
-        ls "-aFlR" /outputs/generatedText
-    needs:
-      - cloneRepo
-    inputs:
-      repo: cloneRepo.outputs.repo
-    outputs:
-      generatedText:
-        type: dataset
-        with:
-          ref: demo-dataset
-    resources:
-      instance-type: RTX4000
-context:
-  event:
-    github:
-      ref: b3c5e2f80550a5a2f7f2086f1ad0c2c71adddcf5
-      url: https://github.com/sonicpierre/NLP-Text-Generation
