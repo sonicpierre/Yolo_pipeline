@@ -53,7 +53,7 @@ jobs:
 
   generateText:
     resources:
-      instance-type: RTX4000
+      instance-type: C5
     needs:
       - cloneRepo
     inputs:
