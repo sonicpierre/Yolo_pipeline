@@ -14,7 +14,7 @@ jobs:
       url: context.event.github.url
   Yolo:
     resources:
-      instance-type: RTX5000
+      instance-type: P5000
     needs:
       - CloneRepo
     uses: script@v1
