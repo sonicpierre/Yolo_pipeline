@@ -12,9 +12,9 @@ jobs:
     uses: git-checkout@v1
     with:
       url: context.event.github.url
-  HelloWorld:
+  Yolo:
     resources:
-      instance-type: C5
+      instance-type: RTX5000
     needs:
       - CloneRepo
     uses: script@v1
