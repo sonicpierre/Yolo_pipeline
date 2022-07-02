@@ -29,6 +29,4 @@ jobs:
           ref: ds4r0a0xnoizszj
     outputs:
       my-volume:
-        type: dataset
-      with:
-        ref: ma-couille
+        type: volume
