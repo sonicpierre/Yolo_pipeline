@@ -21,6 +21,7 @@ jobs:
     with:
       script: python /inputs/repo/hello.py
       image: ultralytics/yolov5
+      url: https://github.com/ultralytics/yolov5.git
     inputs:
       repo: CloneRepo.outputs.repo
       demo-dataset:
