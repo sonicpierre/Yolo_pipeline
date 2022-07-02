@@ -1,4 +1,4 @@
 import os
 print("Hello World !!")
 
-os.listdir()
+print(os.listdir())
