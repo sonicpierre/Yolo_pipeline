@@ -28,5 +28,7 @@ jobs:
         with:
           ref: ds4r0a0xnoizszj
     outputs:
-      my-modif:
+      demo-dataset:
         type: dataset
+      with:
+        ref: ds4r0a0xnoizszj
