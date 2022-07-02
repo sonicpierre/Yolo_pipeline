@@ -23,7 +23,7 @@ jobs:
       image: ultralytics/yolov5
     inputs:
       repo: CloneRepo.outputs.repo
-      my_thumb:
+      thumb:
         type: dataset
         with:
           ref: dsfbox6kwvcwmtj
