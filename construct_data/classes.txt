@@ -1,0 +1,3 @@
+thumbhorizontal
+thumbdown
+thumbup

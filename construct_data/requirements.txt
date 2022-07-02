@@ -1,0 +1,4 @@
+labelImg
+opencv-python
+sklearn
+pytest
