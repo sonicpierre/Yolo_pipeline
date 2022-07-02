@@ -33,3 +33,5 @@ jobs:
     outputs:
       results:
         type: dataset
+          with:
+            ref: def123ghi456jkt
