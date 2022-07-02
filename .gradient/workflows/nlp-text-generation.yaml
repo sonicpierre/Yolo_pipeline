@@ -19,7 +19,7 @@ jobs:
       - CloneRepo
     uses: script@v1
     with:
-      script: python3 train.py --img 640 --cfg yolov5s.yaml --hyp hyp.scratch.yaml --batch 8 --epochs 100 --data /inputs/repo/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
+      script: python3 train.py --img 640 --cfg yolov5s.yaml --hyp /inputs/repo/hyp.scratch.yaml --batch 8 --epochs 100 --data /inputs/repo/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
       image: ultralytics/yolov5
     inputs:
       repo: CloneRepo.outputs.repo
