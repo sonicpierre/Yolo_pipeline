@@ -21,8 +21,8 @@ jobs:
     with:
       script: |-
         python3 /inputs/repo/hello.py
-        python3 train.py --img 640 --cfg yolov5s.yaml --hyp /inputs/repo/hyp.scratch.yaml --batch 8 --epochs 50 --data /inputs/repo/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
-        cp -r runs /outputs/results/
+        python3 train.py --img 640 --cfg yolov5s.yaml --hyp /inputs/repo/hyp.scratch.yaml --batch 8 --epochs 20 --data /inputs/repo/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
+        cp -r runs /outputs/demo-dataset/
       image: ultralytics/yolov5
     inputs:
       repo: CloneRepo.outputs.repo
