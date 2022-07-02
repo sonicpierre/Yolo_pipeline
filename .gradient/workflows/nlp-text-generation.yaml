@@ -28,7 +28,7 @@ jobs:
         with:
           ref: ds4r0a0xnoizszj
     outputs:
-      demo-dataset:
+      my-volume:
         type: dataset
       with:
-        ref: ds4r0a0xnoizszj
+        ref: ma-couille
