@@ -19,7 +19,8 @@ jobs:
       - CloneRepo
     uses: script@v1
     with:
-      script: pip install -r yolov5/requirements.txt
+      script: pip install -r requirements.txt
+
       image: ultralytics/yolov5
     inputs:
       repo: CloneRepo.outputs.repo
