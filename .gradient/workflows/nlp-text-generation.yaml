@@ -25,6 +25,8 @@ jobs:
       repo: CloneRepo.outputs.repo
       my_thumb:
         type: dataset
+        with:
+          ref: dsfbox6kwvcwmtj
     outputs:
       my-volume:
         type: volume
