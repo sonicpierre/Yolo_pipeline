@@ -19,6 +19,10 @@ jobs:
       - CloneRepo
     inputs:
       repo: CloneRepo.outputs.repo
+      demo-dataset:
+        type: dataset
+        with:
+          ref: ds4r0a0xnoizszj
     uses: script@v1
     with:
       script: python /inputs/repo/hello.py
