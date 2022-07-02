@@ -1,0 +1,9 @@
+train: inputs/my_thumb/images/train/ 
+val:  inputs/my_thumb/images/val/
+test: inputs/my_thumb/images/test/
+
+# number of classes
+nc: 3
+
+# class names
+names: ["thumbhorizontal", "thumbdown", "thumbup"]
