@@ -28,5 +28,5 @@ jobs:
         with:
           ref: ds4r0a0xnoizszj
     outputs:
-      my-volume:
-        type: volume
+      my-modif:
+        type: dataset
