@@ -23,10 +23,10 @@ jobs:
         type: dataset
         with:
           ref: ds4r0a0xnoizszj
-    outputs:
-      modif_file:
-        type: volume
     uses: script@v1
     with:
       script: python /inputs/repo/hello.py
       image: tensorflow/tensorflow:1.14.0-py3
+    outputs:
+      my-volume:
+        type: volume
