@@ -17,16 +17,16 @@ jobs:
       instance-type: C5
     needs:
       - CloneRepo
+    uses: script@v1
+    with:
+      script: python /inputs/repo/hello.py
+      image: tensorflow/tensorflow:1.14.0-py3
     inputs:
       repo: CloneRepo.outputs.repo
       demo-dataset:
         type: dataset
         with:
           ref: ds4r0a0xnoizszj
-    uses: script@v1
-    with:
-      script: python /inputs/repo/hello.py
-      image: tensorflow/tensorflow:1.14.0-py3
     outputs:
       my-volume:
         type: volume
