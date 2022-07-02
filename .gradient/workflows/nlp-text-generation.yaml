@@ -19,9 +19,7 @@ jobs:
       - CloneRepo
     uses: script@v1
     with:
-      script: |-
-        git clone https://github.com/ultralytics/yolov5
-        python /inputs/repo/hello.py
+      script: python /inputs/repo/hello.py
       image: ultralytics/yolov5
     inputs:
       repo: CloneRepo.outputs.repo
