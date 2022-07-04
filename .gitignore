@@ -1,5 +1,8 @@
-data
+venv
+yolov5
 secret.py
 data_secret.json
 __pycache__
+roms
 Thumb
+pipeline_result

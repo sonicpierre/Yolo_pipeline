@@ -20,7 +20,7 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        python3 train.py --img 640 --cfg yolov5s.yaml --hyp /inputs/repo/yolo_specification/hyp.scratch.yaml --batch 8 --epochs 50 --data /inputs/repo/yolo_specification/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
+        python3 train.py --img 640 --cfg yolov5s.yaml --hyp /inputs/repo/yolo_specification/hyp.scratch.yaml --batch 8 --epochs 100 --data /inputs/repo/yolo_specification/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
         cp -r runs /outputs/volumeweights/
       image: ultralytics/yolov5
     inputs:
@@ -42,6 +42,9 @@ jobs:
       script: |-
         python3 detect.py --source /inputs/thumb/images/test/ --weights /inputs/volumeweights/runs/train/thumb/weights/best.pt --conf 0.25 --name thumb_det
         cp -r runs/detect /outputs/demo-dataset/
+        python3 export.py --weights /inputs/volumeweights/runs/train/thumb/weights/best.pt --include torchscript onnx
+        cp /inputs/volumeweights/runs/train/thumb/weights/best.onnx /outputs/demo-dataset/
+        cp /inputs/volumeweights/runs/train/thumb/weights/best.pt /outputs/demo-dataset/
       image: ultralytics/yolov5
     inputs:
       volumeweights: Yolo.outputs.volumeweights
