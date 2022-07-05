@@ -41,4 +41,4 @@ def run_pipeline():
 if __name__ == "__main__":
     clean_result()
     run_pipeline()
-    get_result() #Attendre le changement de version pour le faire
+    #get_result() #Attendre le changement de version pour le faire

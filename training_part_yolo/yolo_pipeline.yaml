@@ -25,10 +25,10 @@ jobs:
       image: ultralytics/yolov5
     inputs:
       repo: CloneRepo.outputs.repo
-      my_thumb:
+      mythumb:
         type: dataset
         with:
-          ref: dsfbox6kwvcwmtj
+          ref: dsan9disnqrb1e7
     outputs:
       volumeweights:
         type: volume
@@ -40,7 +40,7 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        python3 detect.py --source /inputs/thumb/images/test/ --weights /inputs/volumeweights/runs/train/thumb/weights/best.pt --conf 0.25 --name thumb_det
+        python3 detect.py --source /inputs/mythumb/images/test/ --weights /inputs/volumeweights/runs/train/thumb/weights/best.pt --conf 0.25 --name thumb_det
         cp -r runs/detect /outputs/demo-dataset/
         python3 export.py --weights /inputs/volumeweights/runs/train/thumb/weights/best.pt --include torchscript onnx
         cp /inputs/volumeweights/runs/train/thumb/weights/best.onnx /outputs/demo-dataset/
@@ -48,10 +48,10 @@ jobs:
       image: ultralytics/yolov5
     inputs:
       volumeweights: Yolo.outputs.volumeweights
-      my_thumb:
+      mythumb:
         type: dataset
         with:
-          ref: dsfbox6kwvcwmtj
+          ref: dsan9disnqrb1e7
     outputs:
       demo-dataset:
         type: dataset

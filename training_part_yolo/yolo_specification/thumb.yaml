@@ -1,6 +1,6 @@
-train: /inputs/my_thumb/images/train/ 
-val:  /inputs/my_thumb/images/val/
-test: /inputs/my_thumb/images/test/
+train: /inputs/mythumb/images/train/ 
+val:  /inputs/mythumb/images/val/
+test: /inputs/mythumb/images/test/
 
 # number of classes
 nc: 2
