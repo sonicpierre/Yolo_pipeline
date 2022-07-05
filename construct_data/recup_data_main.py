@@ -2,8 +2,10 @@ import get_data as dd
 import os
 
 if __name__=="__main__":
+    #Collect data with the camera
     #dd.capture_img()
-    #os.system("labelImg")
+
+    #Command labelImg to lunch image labelling
 
     # Penser à donner un nom de dossier à la fonction si ce n'est pas la première fois qu'on l'utilise
     #dd.partition_data()

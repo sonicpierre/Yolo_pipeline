@@ -1,4 +1,6 @@
 from gradient import DatasetsClient, DatasetVersionsClient
+import sys
+sys.path.insert(1, '/home/virgaux/Paperspace/Worflows/Yolo_pipeline/secrets')
 from secret import API_KEY, BUCKET_ID
 import os
 import json
@@ -51,6 +53,6 @@ def visualise(name_json="data_secret.json"):
 
 if __name__=='__main__':
 
-    #define_dataset("my_face")
-    define_version_upload("data/")
+    define_dataset("my_thumb")
+    define_version_upload("thumb/")
     visualise()

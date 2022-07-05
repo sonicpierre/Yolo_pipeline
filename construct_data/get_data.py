@@ -72,15 +72,15 @@ def move_files_to_folder(list_of_files, destination_folder):
 
         for f in list_files:
             try:
-                print(os.path.join(list_of_files,f))
-                shutil.move(os.path.join(list_of_files,f), destination_folder)
+
+                shutil.move(f, destination_folder)
             except:
                 print(f)
                 assert False
 
-    if type(list_of_files != list):
+    if type(list_of_files) != list:
         list_files = os.listdir(list_of_files)
-        move_file(list_files)
+        move_file([list_files + "/" + i for i in os.listdir(list_files)])
 
     else:
         move_file(list_of_files)

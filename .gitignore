@@ -1,8 +1,9 @@
 venv
 yolov5
+secrets
 secret.py
 data_secret.json
 __pycache__
 roms
-Thumb
+thumb
 pipeline_result

@@ -1,9 +1,17 @@
 import os
 import shutil
-from secret import DATASET_RESULT_ID, WORKFLOW_ID, API_KEY
-from gradient import DatasetVersionsClient
+import sys
+sys.path.insert(1, '/home/virgaux/Paperspace/Worflows/Yolo_pipeline/secrets')
+from secret import API_KEY, DATASET_RESULT_ID, WORKFLOW_ID
+from gradient import DatasetVersionsClient, WorkflowsClient, ProjectsClient
 
 datasetVersions_client = DatasetVersionsClient(API_KEY)
+workflow_client = WorkflowsClient(API_KEY)
+projects_client = ProjectsClient(API_KEY)
+
+def create_workflow(name:str, project_name:str):
+    workflow_client.list(project_id='prjpkflqz')
+    workflow_client.create(name=name, project_id='prjpkflqz')
 
 def clean_result():
     """
@@ -33,4 +41,4 @@ def run_pipeline():
 if __name__ == "__main__":
     clean_result()
     run_pipeline()
-    #get_result() #Attendre le changement de version pour le faire
+    get_result() #Attendre le changement de version pour le faire

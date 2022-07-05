@@ -1,9 +1,9 @@
-train: /inputs/thumb/images/train/ 
-val:  /inputs/thumb/images/val/
-test: /inputs/thumb/images/test/
+train: /inputs/my_thumb/images/train/ 
+val:  /inputs/my_thumb/images/val/
+test: /inputs/my_thumb/images/test/
 
 # number of classes
-nc: 3
+nc: 2
 
 # class names
-names: ["thumbhorizontal", "thumbdown", "thumbup"]
+names: ["left", "right"]
