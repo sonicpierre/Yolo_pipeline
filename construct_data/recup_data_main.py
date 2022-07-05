@@ -1,5 +1,6 @@
 import get_data as dd
-import os
+import config as conf
+import shutil
 
 if __name__=="__main__":
     #Collect data with the camera
@@ -9,6 +10,7 @@ if __name__=="__main__":
 
     # Penser à donner un nom de dossier à la fonction si ce n'est pas la première fois qu'on l'utilise
     #dd.partition_data()
+    #shutil.rmtree(conf.IMAGES_PATH_CAMERA)
 
     #Vérifier par test unitaire que les données sont bien labellisé comme il faut
     #dd.test_data()
