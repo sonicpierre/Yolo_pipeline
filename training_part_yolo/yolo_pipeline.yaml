@@ -32,6 +32,26 @@ jobs:
     outputs:
       volumeweights:
         type: volume
+
+  Tensorboard:
+    resources:
+      instance-type: P5000
+    needs:
+      - CloneRepo
+    uses: script@v1
+    with:
+      script: echo Coucou
+      image: tensorflow/tensorflow-gpu
+    inputs:
+      repo: CloneRepo.outputs.repo
+      mythumb:
+        type: dataset
+        with:
+          ref: dsan9disnqrb1e7
+    outputs:
+      volumeweights:
+        type: volume
+
   TestResult:
     resources:
       instance-type: P5000
