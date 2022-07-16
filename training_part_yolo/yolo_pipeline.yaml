@@ -12,6 +12,7 @@ jobs:
     uses: git-checkout@v1
     with:
       url: https://github.com/sonicpierre/Yolo_pipeline.git
+
   Yolo:
     resources:
       instance-type: P5000
@@ -40,8 +41,10 @@ jobs:
       - CloneRepo
     uses: script@v1
     with:
-      script: echo Coucou
-      image: tensorflow/tensorflow-gpu
+      script: |-
+        echo Coucou
+        git clone https://github.com/tensorflow/models.git
+      image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
     inputs:
       repo: CloneRepo.outputs.repo
       mythumb:

@@ -1,0 +1,18 @@
+Download YOLO : git clone https://github.com/ultralytics/yolov5
+
+Paperspace config :
+    #Penser à enlever opencv des requirements pour paperspace
+    !pip install -r yolov5/requirements.txt
+
+    Versionning pytorch : pip install torch==1.10.0+cu113 torchvision==0.11.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+    hyp.scratch.yaml : copy_paste: 0.0
+
+Wandb : Penser qu'il est possible de se logger pour avoir un suivi des entraînements
+Entraînement : python train.py --img 640 --cfg yolov5s.yaml --hyp hyp.scratch.yaml --batch 8 --epochs 100 --data thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
+Compress : tar -czvf Thumb.tar.gz runs
+
+Test images : python detect.py --source ../Thumb/images/test/ --weights runs/train/thumb_detector/weights/best.pt --conf 0.25 --name thumb_det_2
+Test camera : python detect.py --source 0 --weights runs/train/thumb_detector/weights/best.pt --conf 0.25 --name thumb_det_2
+
+Onnx est un format d'export qui permet de passer d'un framework à l'autre
+Export model : python export.py --weights runs/train/thumb/weights/best.pt --include torchscript onnx
