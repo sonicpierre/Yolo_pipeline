@@ -15,7 +15,7 @@ import numpy as np
 from os.path import join
 
 ## coco classes
-CLASSES = ("right", "left")
+CLASSES = ("left", "right")
 
 ## converts the normalized positions  into integer positions
 def unconvert(class_id, width, height, x, y, w, h):
@@ -29,9 +29,9 @@ def unconvert(class_id, width, height, x, y, w, h):
 
 
 ## path root folder
-ROOT_IMG = '/inputs/mythumb/images/train/'
-ROOT_LAB = '/inputs/mythumb/labels/train/'
-DIR_OUTPUT = '/outputs/cvtmythumb/outputs/train/'
+ROOT_IMG = '/inputs/mythumb/images/'
+ROOT_LAB = '/inputs/mythumb/labels/'
+DIR_OUTPUT = '/outputs/cvtmythumb/outputs/'
 
 ## converts coco into xml 
 def xml_transform(root_img, root_label, dir_output, classes):
@@ -122,4 +122,5 @@ def xml_transform(root_img, root_label, dir_output, classes):
         f.close()     
        
 
-xml_transform(ROOT_IMG, ROOT_LAB, DIR_OUTPUT, CLASSES)
+for dir in ["train/", "val/", "test/"]:
+    xml_transform(ROOT_IMG + dir, ROOT_LAB + dir, DIR_OUTPUT + dir, CLASSES)

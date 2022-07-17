@@ -41,6 +41,7 @@ jobs:
       script: |-
         pip install lxml --upgrade
         python /inputs/repo/training_part_tf/converter_yolo_voc.py
+        ls /outputs/cvtmythumb/outputs/train/
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
   Tensorflow:
