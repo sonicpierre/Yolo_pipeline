@@ -29,7 +29,7 @@ def unconvert(class_id, width, height, x, y, w, h):
 
 
 ## path root folder
-ROOT_IMG = '/inputs/mythumb/images/train/'
+ROOT_IMG = '/inputs/mythumb/image/train/'
 ROOT_LAB = '/inputs/mythumb/labels/train/'
 DIR_OUTPUT = '/outputs/cvtmythumb/outputs/train/'
 
@@ -43,7 +43,7 @@ def xml_transform(root_img, root_label, dir_output, classes):
     if check == True:
         l.remove('classes')
         
-    ids=[x.split('.')[0] for x in l]   
+    ids=[x.split('.txt')[0] for x in l]   
 
     annopath = join(root_label, '%s.txt')
     imgpath = join(root_img, '%s.jpg')
@@ -115,7 +115,6 @@ def xml_transform(root_img, root_label, dir_output, classes):
                 node_ymax.text = str(new_label[4])
                 xml = tostring(node_root, pretty_print=True)  
                 dom = parseString(xml)
-        print(xml)  
         f =  open(outpath % img_id, "wb")
         #f = open(os.path.join(outpath, img_id), "w")
         #os.remove(target)

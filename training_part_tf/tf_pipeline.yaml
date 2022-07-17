@@ -22,15 +22,38 @@ jobs:
     with:
       url: https://github.com/tensorflow/models.git
   
+  ConcertYoloVoc:
+    resources:
+      instance-type: C5
+    needs:
+      - CloneRepo
+    inputs:
+      repo: CloneRepo.outputs.repo
+      mythumb:
+        type: dataset
+        with:
+          ref: dsan9disnqrb1e7
+    outputs:
+      cvtmythumb:
+        type: volume
+    uses: script@v1
+    with:
+      script: |-
+        pip install lxml --upgrade
+        python /inputs/repo/training_part_tf/converter_yolo_voc.py
+      image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
+
   Tensorflow:
     resources:
       instance-type: C5
     needs:
       - CloneRepo
       - CloneTF
+      - ConcertYoloVoc
     inputs:
       repo: CloneRepo.outputs.repo
       repomodels: CloneTF.outputs.repomodels
+      cvtmythumb: ConcertYoloVoc.outputs.cvtmythumb
       mythumb:
         type: dataset
         with:
@@ -49,5 +72,4 @@ jobs:
         mv 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz' 'workspace/pre-trained-models'
         cd 'workspace/pre-trained-models' && tar -zxvf 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz'
 
-        python /inputs/repo/training_part_tf/converter_yolo_voc.py
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
