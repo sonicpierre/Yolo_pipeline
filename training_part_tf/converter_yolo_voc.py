@@ -29,7 +29,7 @@ def unconvert(class_id, width, height, x, y, w, h):
 
 
 ## path root folder
-ROOT_IMG = '/inputs/mythumb/image/train/'
+ROOT_IMG = '/inputs/mythumb/images/train/'
 ROOT_LAB = '/inputs/mythumb/labels/train/'
 DIR_OUTPUT = '/outputs/cvtmythumb/outputs/train/'
 
