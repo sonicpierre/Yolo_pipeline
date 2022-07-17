@@ -28,8 +28,8 @@ jobs:
         unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
         unzip -o $PROTOC_ZIP -d /usr/local include/*
         rm -f $PROTOC_ZIP
-        protoc models/research/object_detection/protos/*.proto --python_out=.
-        python models/research/object_detection/packages/tf2/setup.py
-        python -m pip install --use-feature=2020-resolver .
-        python models/research/object_detection/builders/model_builder_tf2_test.py
+        cd models/research && protoc object_detection/protos/*.proto --python_out=. && cp object_detection/packages/tf2/setup.py . && python -m pip install .
+        python object_detection/builders/model_builder_tf2_test.py
+        pip install tensorflow --upgrade
+        ls /inputs/repo/training_part_tf
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
