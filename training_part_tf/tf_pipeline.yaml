@@ -34,8 +34,12 @@ jobs:
     uses: script@v1
     with:
       script: |-
+        ls /inputs/repomodels/research/object_detection/protos/
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
+        protoc /inputs/repomodels/research/object_detection/protos/*.proto --python_out=. && cp /inputs/repomodels/research/object_detection/packages/tf2/setup.py . && python -m pip install .
+        python /inputs/repomodels/research/object_detection/builders/model_builder_tf2_test.py
+        pip install tensorflow --upgrade
 
         wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
         mv 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz' 'workspace/pre-trained-models'
