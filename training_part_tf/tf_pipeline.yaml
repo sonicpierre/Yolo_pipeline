@@ -22,14 +22,12 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        git clone https://github.com/tensorflow/models.git
-        PROTOC_ZIP=protoc-3.15.8-linux-x86_64.zip
-        curl -OL https://github.com/google/protobuf/releases/download/v3.15.8/$PROTOC_ZIP
-        unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
-        unzip -o $PROTOC_ZIP -d /usr/local include/*
-        rm -f $PROTOC_ZIP
-        cd models/research && protoc object_detection/protos/*.proto --python_out=. && cp object_detection/packages/tf2/setup.py . && python -m pip install .
-        python object_detection/builders/model_builder_tf2_test.py
-        pip install tensorflow --upgrade
-        ls /inputs/repo/training_part_tf
+        ./inputs/repo/training_part_tf/install_env.sh
+
+        wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
+        mv 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz' 'workspace/pre-trained-models'
+        cd 'workspace/pre-trained-models' && tar -zxvf 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz'
+        ls
+
+        python /inputs/repo/training_part_tf/object_hello.py
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
