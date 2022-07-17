@@ -16,7 +16,7 @@ jobs:
     resources:
       instance-type: C5
     outputs:
-      repo_models:
+      repomodels:
         type: volume
     uses: git-checkout@v1
     with:
@@ -30,7 +30,7 @@ jobs:
       - CloneTF
     inputs:
       repo: CloneRepo.outputs.repo
-      repo: CloneRepo.outputs.repo_models
+      repo: CloneRepo.outputs.repomodels
     uses: script@v1
     with:
       script: |-
