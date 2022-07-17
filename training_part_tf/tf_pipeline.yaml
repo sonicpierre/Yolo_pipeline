@@ -31,17 +31,23 @@ jobs:
     inputs:
       repo: CloneRepo.outputs.repo
       repomodels: CloneTF.outputs.repomodels
+      mythumb:
+        type: dataset
+        with:
+          ref: dsan9disnqrb1e7
+    outputs:
+      cvtmythumb:
+        type: volume
     uses: script@v1
     with:
       script: |-
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
-        ls
 
+        mkdir -p workspace/pre-trained-models
         wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
         mv 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz' 'workspace/pre-trained-models'
         cd 'workspace/pre-trained-models' && tar -zxvf 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz'
-        ls
 
-        python /inputs/repo/training_part_tf/object_hello.py
+        python /inputs/repo/training_part_tf/converter_yolo_voc.py
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
