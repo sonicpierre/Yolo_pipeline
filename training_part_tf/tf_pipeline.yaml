@@ -30,7 +30,7 @@ jobs:
       - CloneTF
     inputs:
       repo: CloneRepo.outputs.repo
-      repo: CloneRepo.outputs.repomodels
+      repomodels: CloneTF.outputs.repomodels
     uses: script@v1
     with:
       script: |-
