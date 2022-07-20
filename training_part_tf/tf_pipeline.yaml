@@ -113,8 +113,8 @@ jobs:
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
         pip install numpy --upgrade
-        
+
         python /inputs/repo/training_part_tf/config_pipeline.py
-        python /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8 --pipeline_config_path=/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config
+        python /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/ --pipeline_config_path=/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config
 
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
