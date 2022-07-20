@@ -36,12 +36,16 @@ jobs:
     outputs:
       cvtmythumb:
         type: volume
+      debugger:
+        type: dataset
+        with:
+          ref: dsqziuv60ua94yv
     uses: script@v1
     with:
       script: |-
         pip install lxml --upgrade
         python /inputs/repo/training_part_tf/converter_yolo_voc.py
-        ls /outputs/cvtmythumb/outputs/
+        
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
   ConvertVocTFrecord:
@@ -62,6 +66,7 @@ jobs:
     outputs:
       tfrecordsmythumb:
         type: volume
+
     uses: script@v1
     with:
       script: |-
@@ -69,9 +74,9 @@ jobs:
         ./inputs/repo/training_part_tf/install_env.sh
 
         python /inputs/repo/training_part_tf/create_labelmap.py
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train.record
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/val.record
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/test.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/train.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/val.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/test.record
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
   DownloadModel:
@@ -118,9 +123,6 @@ jobs:
         ./inputs/repo/training_part_tf/install_env.sh
         pip install numpy --upgrade
         mkdir model_res
-
-        ls /inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/
-        ls /inputs/tfrecordsmythumb/
 
         python /inputs/repo/training_part_tf/config_pipeline.py
         python /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=model_res --pipeline_config_path=pipeline.config

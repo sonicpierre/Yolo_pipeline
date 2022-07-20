@@ -31,7 +31,7 @@ def unconvert(class_id, width, height, x, y, w, h):
 ## path root folder
 ROOT_IMG = '/inputs/mythumb/images/'
 ROOT_LAB = '/inputs/mythumb/labels/'
-DIR_OUTPUT = '/outputs/cvtmythumb/outputs/'
+DIR_OUTPUT = '/outputs/debugger/outputs/'
 
 ## converts coco into xml 
 def xml_transform(root_img, root_label, dir_output, classes):
