@@ -41,10 +41,6 @@ jobs:
       script: |-
         pip install lxml --upgrade
         python /inputs/repo/training_part_tf/converter_yolo_voc.py
-
-        cp -R /inputs/mythumb/images/train/ /outputs/cvtmythumb/outputs/train
-        cp -R /inputs/mythumb/images/val/ /outputs/cvtmythumb/outputs/val
-        cp -R /inputs/mythumb/images/test/ /outputs/cvtmythumb/outputs/test
         
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
@@ -66,10 +62,6 @@ jobs:
     outputs:
       tfrecordsmythumb:
         type: volume
-      debugger:
-        type: dataset
-        with:
-          ref: dsqziuv60ua94yv
 
     uses: script@v1
     with:
@@ -77,12 +69,10 @@ jobs:
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
 
-        ls /inputs/cvtmythumb/outputs/test
-
         python /inputs/repo/training_part_tf/create_labelmap.py
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/train.record
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/val.record
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/test.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/val.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/test.record
 
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
