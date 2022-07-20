@@ -22,5 +22,5 @@ pipeline_config.eval_input_reader[0].label_map_path = "/inputs/tfrecordsmythumb/
 pipeline_config.eval_input_reader[0].tf_record_input_reader.input_path[:] = [os.path.join("/inputs/tfrecordsmythumb/", 'test.record')]
 
 config_text = text_format.MessageToString(pipeline_config)                                                                                                                                                                                                        
-with tf.io.gfile.GFile("/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config", "wb") as f:                                                                                                                                                                                                                     
+with tf.io.gfile.GFile("pipeline.config", "wb") as f:                                                                                                                                                                                                                     
     f.write(config_text)
