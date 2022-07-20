@@ -36,15 +36,17 @@ jobs:
     outputs:
       cvtmythumb:
         type: volume
-      debugger:
-        type: dataset
-        with:
-          ref: dsqziuv60ua94yv
     uses: script@v1
     with:
       script: |-
         pip install lxml --upgrade
         python /inputs/repo/training_part_tf/converter_yolo_voc.py
+
+        ls /outputs/cvtmythumb/
+
+        cp -R /inputs/mythumb/images/train/ /outputs/cvtmythumb/outputs/train
+        cp -R /inputs/mythumb/images/val/ /outputs/cvtmythumb/outputs/val
+        cp -R /inputs/mythumb/images/test/ /outputs/cvtmythumb/outputs/test
         
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
@@ -66,6 +68,10 @@ jobs:
     outputs:
       tfrecordsmythumb:
         type: volume
+      debugger:
+        type: dataset
+        with:
+          ref: dsqziuv60ua94yv
 
     uses: script@v1
     with:
@@ -77,6 +83,7 @@ jobs:
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/train.record
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/val.record
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/test.record
+
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
   DownloadModel:
