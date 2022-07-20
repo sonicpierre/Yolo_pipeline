@@ -14,12 +14,12 @@ with tf.io.gfile.GFile("/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_
 
 pipeline_config.model.ssd.num_classes = len(LABELS)
 pipeline_config.train_config.batch_size = 4
-pipeline_config.train_config.fine_tune_checkpoint = os.path.join("/outputs/tfrecordsmythumb/pre-trained-models", "ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8", 'checkpoint', 'ckpt-0')
+pipeline_config.train_config.fine_tune_checkpoint = os.path.join("/inputs/tfrecordsmythumb/pre-trained-models", "ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8", 'checkpoint', 'ckpt-0')
 pipeline_config.train_config.fine_tune_checkpoint_type = "detection"
-pipeline_config.train_input_reader.label_map_path= "/outputs/tfrecordsmythumb/labelmap.pbtxt"
-pipeline_config.train_input_reader.tf_record_input_reader.input_path[:] = [os.path.join("/outputs/tfrecordsmythumb/", 'train.record')]
-pipeline_config.eval_input_reader[0].label_map_path = "/outputs/tfrecordsmythumb/labelmap.pbtxt"
-pipeline_config.eval_input_reader[0].tf_record_input_reader.input_path[:] = [os.path.join("/outputs/tfrecordsmythumb/", 'test.record')]
+pipeline_config.train_input_reader.label_map_path= "/inputs/tfrecordsmythumb/labelmap.pbtxt"
+pipeline_config.train_input_reader.tf_record_input_reader.input_path[:] = [os.path.join("/inputs/tfrecordsmythumb/", 'train.record')]
+pipeline_config.eval_input_reader[0].label_map_path = "/inputs/tfrecordsmythumb/labelmap.pbtxt"
+pipeline_config.eval_input_reader[0].tf_record_input_reader.input_path[:] = [os.path.join("/inputs/tfrecordsmythumb/", 'test.record')]
 
 config_text = text_format.MessageToString(pipeline_config)                                                                                                                                                                                                        
 with tf.io.gfile.GFile("/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config", "wb") as f:                                                                                                                                                                                                                     
