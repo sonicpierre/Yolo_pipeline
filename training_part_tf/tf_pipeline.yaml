@@ -50,8 +50,10 @@ jobs:
     needs:
       - CloneRepo
       - ConvertYoloVoc
+      - CloneTF
     inputs:
       repo: CloneRepo.outputs.repo
+      repomodels: CloneTF.outputs.repomodels
       cvtmythumb: ConvertYoloVoc.outputs.cvtmythumb
       mythumb:
         type: dataset
@@ -65,8 +67,27 @@ jobs:
       script: |-
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
+
         python /inputs/repo/training_part_tf/create_labelmap.py
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/val.record
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/test.record
+      image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
+
+  DownloadModel:
+    resources:
+      instance-type: C5
+    outputs:
+      mymodel:
+        type: volume
+    uses: script@v1
+    with:
+      script: |-
+        mkdir -p workspace/pre-trained-models
+        wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
+        mv 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz' 'workspace/pre-trained-models'
+        tar -zxvf 'workspace/pre-trained-models/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz'
+        cp -R ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8 /outputs/mymodel
 
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
@@ -77,10 +98,12 @@ jobs:
       - CloneRepo
       - CloneTF
       - ConvertVocTFrecord
+      - DownloadModel
     inputs:
       repo: CloneRepo.outputs.repo
       repomodels: CloneTF.outputs.repomodels
       tfrecordsmythumb: ConvertVocTFrecord.outputs.tfrecordsmythumb
+      mymodel: DownloadModel.outputs.mymodel
     outputs:
       cvtmythumb:
         type: volume
@@ -90,11 +113,7 @@ jobs:
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
 
-        ls /inputs/cvtmythumb
-
-        mkdir -p workspace/pre-trained-models
-        wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
-        mv 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz' 'workspace/pre-trained-models'
-        cd 'workspace/pre-trained-models' && tar -zxvf 'ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz'
+        python /inputs/repo/training_part_tf/config_pipeline.py
+        python /inputs/repomodels/research/model_main_tf2.py --model_dir=/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8 --pipeline_config_path=/inputs/mymodel/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config
 
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29

@@ -1,3 +1,5 @@
+from config import LABELS
+
 def create_labmap(dest_dir:str, dico_lab:dict):
 
     labels = dico_lab
@@ -11,5 +13,4 @@ def create_labmap(dest_dir:str, dico_lab:dict):
 
 
 if __name__=="__main__":
-    dico = {'name':'left', 'id':1}, {'name':'right', 'id':2}
-    create_labmap("/outputs/tfrecordsmythumb/labelmap.pbtxt", dico)
+    create_labmap("/outputs/tfrecordsmythumb/labelmap.pbtxt", LABELS)
