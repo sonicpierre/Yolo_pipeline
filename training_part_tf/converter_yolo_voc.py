@@ -12,6 +12,7 @@ import cv2
 from xml.dom.minidom import parseString
 from lxml.etree import Element, SubElement, tostring
 import numpy as np
+import shutil
 from os.path import join
 
 ## coco classes
@@ -124,3 +125,6 @@ def xml_transform(root_img, root_label, dir_output, classes):
 
 for dir in ["train/", "val/", "test/"]:
     xml_transform(ROOT_IMG + dir, ROOT_LAB + dir, DIR_OUTPUT + dir, CLASSES)
+
+    for i in os.listdir(ROOT_IMG + dir):
+        shutil.copy(ROOT_IMG + dir + "/" + i, DIR_OUTPUT + dir + "/" + i)

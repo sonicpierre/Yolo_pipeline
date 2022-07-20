@@ -42,8 +42,6 @@ jobs:
         pip install lxml --upgrade
         python /inputs/repo/training_part_tf/converter_yolo_voc.py
 
-        ls /outputs/cvtmythumb/
-
         cp -R /inputs/mythumb/images/train/ /outputs/cvtmythumb/outputs/train
         cp -R /inputs/mythumb/images/val/ /outputs/cvtmythumb/outputs/val
         cp -R /inputs/mythumb/images/test/ /outputs/cvtmythumb/outputs/test
@@ -78,6 +76,8 @@ jobs:
       script: |-
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
+
+        ls /inputs/cvtmythumb/outputs/test
 
         python /inputs/repo/training_part_tf/create_labelmap.py
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/debugger/train.record
