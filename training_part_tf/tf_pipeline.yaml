@@ -22,7 +22,7 @@ jobs:
     with:
       url: https://github.com/tensorflow/models.git
   
-  ConcertYoloVoc:
+  ConvertYoloVoc:
     resources:
       instance-type: C5
     needs:
@@ -41,7 +41,33 @@ jobs:
       script: |-
         pip install lxml --upgrade
         python /inputs/repo/training_part_tf/converter_yolo_voc.py
-        ls /outputs/cvtmythumb/outputs/train/
+        ls /outputs/cvtmythumb/outputs/
+      image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
+
+  ConvertVocTFrecord:
+    resources:
+      instance-type: C5
+    needs:
+      - CloneRepo
+      - ConvertYoloVoc
+    inputs:
+      repo: CloneRepo.outputs.repo
+      cvtmythumb: ConvertYoloVoc.outputs.cvtmythumb
+      mythumb:
+        type: dataset
+        with:
+          ref: dsan9disnqrb1e7
+    outputs:
+      tfrecordsmythumb:
+        type: volume
+    uses: script@v1
+    with:
+      script: |-
+        chmod +x /inputs/repo/training_part_tf/install_env.sh
+        ./inputs/repo/training_part_tf/install_env.sh
+        python /inputs/repo/training_part_tf/create_labelmap.py
+        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/mythumb/images/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train
+
       image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
 
   Tensorflow:
@@ -50,15 +76,11 @@ jobs:
     needs:
       - CloneRepo
       - CloneTF
-      - ConcertYoloVoc
+      - ConvertVocTFrecord
     inputs:
       repo: CloneRepo.outputs.repo
       repomodels: CloneTF.outputs.repomodels
-      cvtmythumb: ConcertYoloVoc.outputs.cvtmythumb
-      mythumb:
-        type: dataset
-        with:
-          ref: dsan9disnqrb1e7
+      tfrecordsmythumb: ConvertVocTFrecord.outputs.tfrecordsmythumb
     outputs:
       cvtmythumb:
         type: volume
@@ -67,6 +89,8 @@ jobs:
       script: |-
         chmod +x /inputs/repo/training_part_tf/install_env.sh
         ./inputs/repo/training_part_tf/install_env.sh
+
+        ls /inputs/cvtmythumb
 
         mkdir -p workspace/pre-trained-models
         wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
