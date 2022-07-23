@@ -68,10 +68,10 @@ jobs:
       script: |-
         pip install tensorflow==2.5.0
 
-        python /inputs/repo/training_part_tf/create_labelmap.py
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train.record
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/val.record
-        python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/test.record
+        python3 /inputs/repo/training_part_tf/create_labelmap.py
+        python3 /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train.record
+        python3 /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/val.record
+        python3 /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/test.record
 
       image: sonicpierre/tf_object_detection
 
@@ -116,6 +116,7 @@ jobs:
     with:
       script: |-
         pip install tensorflow==2.5.0
+        pip install pandas
 
         mkdir model_res
         python /inputs/repo/training_part_tf/config_pipeline.py
