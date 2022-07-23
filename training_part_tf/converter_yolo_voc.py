@@ -35,7 +35,7 @@ ROOT_LAB = '/inputs/mythumb/labels/'
 DIR_OUTPUT = '/outputs/cvtmythumb/outputs/'
 
 ## converts coco into xml 
-def xml_transform(root_img, root_label, dir_output, classes):
+def xml_transform(root_img:str, root_label:str, dir_output:str, classes:tuple):
 
     ids = list()
     l=os.listdir(root_label)
