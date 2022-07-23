@@ -66,15 +66,14 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        chmod +x /inputs/repo/training_part_tf/install_env.sh
-        ./inputs/repo/training_part_tf/install_env.sh
+        pip install tensorflow==2.5.0
 
         python /inputs/repo/training_part_tf/create_labelmap.py
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/train -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/train.record
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/val -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/val.record
         python /inputs/repo/training_part_tf/converter_voc_tfrecords.py -x /inputs/cvtmythumb/outputs/test -l /outputs/tfrecordsmythumb/labelmap.pbtxt -o /outputs/tfrecordsmythumb/test.record
 
-      image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
+      image: sonicpierre/tf_object_detection
 
   DownloadModel:
     resources:
@@ -116,14 +115,10 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        chmod +x /inputs/repo/training_part_tf/install_env.sh
-        ./inputs/repo/training_part_tf/install_env.sh
-
-        pip uninstall -y tensorflow numpy
         pip install tensorflow==2.5.0
-        pip install numpy==1.19.5
+
         mkdir model_res
         python /inputs/repo/training_part_tf/config_pipeline.py
         python /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=model_res --pipeline_config_path=pipeline.config
 
-      image: paperspace/gradient-base:tf29-pt112-py39-2022-06-29
+      image: sonicpierre/tf_object_detection
