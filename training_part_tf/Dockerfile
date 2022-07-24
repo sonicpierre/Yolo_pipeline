@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.7.0-runtime-ubuntu20.04
+FROM tensorflow/tensorflow:2.5.0-gpu
 
 RUN apt-get update && yes | apt-get upgrade
 RUN mkdir -p /tensorflow/models
