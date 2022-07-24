@@ -5,7 +5,7 @@
 jobs:
   CloneRepo:
     resources:
-      instance-type: C5
+      instance-type: P5000
     outputs:
       repo:
         type: volume
@@ -14,7 +14,7 @@ jobs:
       url: https://github.com/sonicpierre/Yolo_pipeline.git
   CloneTF:
     resources:
-      instance-type: C5
+      instance-type: P5000
     outputs:
       repomodels:
         type: volume
@@ -24,7 +24,7 @@ jobs:
   
   ConvertYoloVoc:
     resources:
-      instance-type: C5
+      instance-type: P5000
     needs:
       - CloneRepo
     inputs:
@@ -46,7 +46,7 @@ jobs:
 
   ConvertVocTFrecord:
     resources:
-      instance-type: C5
+      instance-type: P5000
     needs:
       - CloneRepo
       - ConvertYoloVoc
@@ -78,7 +78,7 @@ jobs:
 
   DownloadModel:
     resources:
-      instance-type: C5
+      instance-type: P5000
     outputs:
       mymodel:
         type: volume
