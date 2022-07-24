@@ -123,3 +123,4 @@ jobs:
         python3 /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=model_res --pipeline_config_path=pipeline.config
 
       image: tensorflow/tensorflow:latest-gpu
+
