@@ -111,8 +111,10 @@ jobs:
         with:
           ref: dsan9disnqrb1e7
     outputs:
-      cvtmythumb:
-        type: volume
+      resulttf:
+        type: dataset
+        with:
+          ref: ds7izfjqcbci4d1
     uses: script@v1
     with:
       script: |-
@@ -120,7 +122,7 @@ jobs:
         ./inputs/repo/training_part_tf/install_env.sh
 
         python3 /inputs/repo/training_part_tf/config_pipeline.py
-        python3 /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=model_res --pipeline_config_path=pipeline.config
+        python3 /inputs/repomodels/research/object_detection/model_main_tf2.py --model_dir=/outputs/resulttf/model_res --pipeline_config_path=pipeline.config
 
       image: tensorflow/tensorflow:latest-gpu
 
