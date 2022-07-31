@@ -7,6 +7,9 @@ from google.protobuf import text_format
 
 
 def read_pipeline(config_file:str):
+    """
+    Read the default config file
+    """
 
     #config = config_util.get_configs_from_pipeline_file(config_file)
     pipeline_config = pipeline_pb2.TrainEvalPipelineConfig()
@@ -17,6 +20,9 @@ def read_pipeline(config_file:str):
     return pipeline_config
 
 def write_pipeline(pipeline_config):
+    """
+    Write the new pipeline
+    """
 
     config_text = text_format.MessageToString(pipeline_config)                                                                                                                                                                                                        
     with tf.io.gfile.GFile("pipeline.config", "wb") as f:                                                                                                                                                                                                                     
@@ -24,6 +30,9 @@ def write_pipeline(pipeline_config):
 
 
 def config_model(config_file:str, labelmap_path:str, labels:str, model_path:str):
+    """
+    Change the pipeline before training
+    """
 
     pipeline_config = read_pipeline(config_file)
     pipeline_config.model.ssd.num_classes = len(labels)

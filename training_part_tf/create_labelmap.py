@@ -1,6 +1,9 @@
 from config import LABELS
 
 def create_labmap(dest_dir:str, dico_lab:dict):
+    """
+    Permet la création d'une labelmap
+    """
 
     labels = dico_lab
 
