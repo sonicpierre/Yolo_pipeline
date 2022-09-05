@@ -21,7 +21,7 @@ def run_yolo():
     epch = "--epochs " + str(EPOCHS)
     data = "--data " + DATA_SPECIFICATION
     weight = "--weights " + WEIGHTS
-    workers = "--workers " + WORKERS
+    workers = "--workers " + str(WORKERS)
     result = "--name " + RESULT_FORLDER
 
 
