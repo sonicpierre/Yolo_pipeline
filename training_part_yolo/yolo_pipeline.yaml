@@ -12,7 +12,7 @@ jobs:
     uses: git-checkout@v1
     with:
       url: https://github.com/sonicpierre/Yolo_pipeline.git
-
+      
   Yolo:
     resources:
       instance-type: P5000
@@ -21,7 +21,7 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        python3 train.py --img 640 --cfg yolov5s.yaml --hyp /inputs/repo/training_part_yolo/yolo_specification/hyp.scratch.yaml --batch 8 --epochs 100 --data /inputs/repo/training_part_yolo/yolo_specification/thumb.yaml --weights yolov5s.pt --workers 24 --name thumb
+        python3 /inputs/repo/training_part_yolo/train_yolo.py
         cp -r runs /outputs/volumeweights/
       image: ultralytics/yolov5
     inputs:
