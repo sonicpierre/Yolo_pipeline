@@ -6,7 +6,6 @@ def create_labmap(dest_dir:str, dico_lab:dict):
     """
 
     labels = dico_lab
-
     with open(dest_dir, 'w') as f:
         for label in labels:
             f.write('item { \n')
