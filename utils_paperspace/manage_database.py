@@ -1,29 +1,22 @@
-from gradient import DatasetsClient, DatasetVersionsClient, StorageProvidersClient
 import sys
 import os
-import json
-
-datasets_client = DatasetsClient(API_KEY)
-datasetVersions_client = DatasetVersionsClient(API_KEY)
-storage_provider_client = StorageProvidersClient(API_KEY)
-
 sys.path.insert(1, '/home/virgaux/Paperspace/Worflows/Yolo_pipeline/secrets')
-from secret import API_KEY
+from secret import DATASETS_CLIENT, DATASETS_VERSION_CLIENT, STORAGE_PROVIDER_CLIENT
 
 def dataset_exist(name:str) -> bool:
-    for dataset in datasets_client.list():
+    for dataset in DATASETS_CLIENT.list():
         if dataset.name==name:
             return True
     return False
 
-def define_dataset(name:str):
+def define_dataset(name:str) -> str:
 
     sid=None
-    for storage_provider in storage_provider_client.list():
+    for storage_provider in STORAGE_PROVIDER_CLIENT.list():
         if storage_provider.name == "Gradient Managed":
             sid=storage_provider.id
 
-    id_dataset = datasets_client.create(
+    id_dataset = DATASETS_CLIENT.create(
         name=name,
         storage_provider_id=sid
     )
@@ -31,16 +24,18 @@ def define_dataset(name:str):
     return id_dataset
     
 
-def define_version_upload(data_path:str, name_json="data_secret.json"):
-    
-    with open(name_json) as json_file:
-        dico_info = json.load(json_file)
+def define_version_upload(data_path:str, id_dataset:str):
 
-    version = datasetVersions_client.create(
-        dataset_id=dico_info["Id dataset"]
+
+    version = DATASETS_VERSION_CLIENT.create(
+        dataset_id=id_dataset
     )
     
-    os.system("gradient datasets files put --id '" + dico_info["Id dataset"] + ":" + version + "' --source-path " + data_path)
-    os.system("gradient datasets versions commit --id '" + dico_info["Id dataset"] + ":" + version + "'")
+    os.system("gradient datasets files put --id '" + id_dataset + ":" + version + "' --source-path " + data_path)
+    os.system("gradient datasets versions commit --id '" + id_dataset + ":" + version + "'")
     
     return version
+
+def visualise(id_dataset:str, id_version:str):
+
+    os.system("gradient datasets files list --id '" + id_dataset + ":" + id_version + "'")
